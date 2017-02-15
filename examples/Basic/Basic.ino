@@ -3,15 +3,12 @@
 
 #include "MicroGear.h"
 
-const char* ssid     = <WIFI_SSID>;
-const char* password = <WIFI_KEY>;
-
 #define APPID   <APPID>
 #define KEY     <APPKEY>
 #define SECRET  <APPSECRET>
 #define ALIAS   "esp8266"
 
-WiFiClient client;
+TCPClient client;
 
 int timer = 0;
 MicroGear microgear(client);
@@ -62,19 +59,6 @@ void setup() {
 
     Serial.begin(115200);
     Serial.println("Starting...");
-
-    /* Initial WIFI, this is just a basic method to configure WIFI on ESP8266.                       */
-    /* You may want to use other method that is more complicated, but provide better user experience */
-    if (WiFi.begin(ssid, password)) {
-        while (WiFi.status() != WL_CONNECTED) {
-            delay(500);
-            Serial.print(".");
-        }
-    }
-
-    Serial.println("WiFi connected");  
-    Serial.println("IP address: ");
-    Serial.println(WiFi.localIP());
 
     /* Initial with KEY, SECRET and also set the ALIAS here */
     microgear.init(KEY,SECRET,ALIAS);
